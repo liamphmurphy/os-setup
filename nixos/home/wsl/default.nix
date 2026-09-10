@@ -30,5 +30,10 @@
     update = "nix flake update --flake ~/os-setup/nixos && sudo nixos-rebuild switch --flake ~/os-setup/nixos#wsl";
   };
 
+  # Use Windows Git Credential Manager from within WSL
+  programs.git.settings = {
+    credential.helper = "/mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager.exe";
+  };
+
   programs.home-manager.enable = true;
 }

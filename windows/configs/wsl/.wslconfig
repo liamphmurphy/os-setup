@@ -1,0 +1,8 @@
+[wsl2]
+memory=16GB
+autoMemoryReclaim=gradual
+sparseVhd=true
+
+[experimental]
+networkingMode=mirrored
+autoProxy=true
