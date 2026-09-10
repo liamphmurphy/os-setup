@@ -1,0 +1,53 @@
+{
+  "$schema": "https://aka.ms/winget-packages.schema.2.0.json",
+  "CreationDate": "2026-09-10T15:19:00.000-00:00",
+  "Sources": [
+    {
+      "Packages": [
+        {
+          "PackageIdentifier": "Audacity.Audacity"
+        },
+        {
+          "PackageIdentifier": "DEVCOM.JetBrainsMonoNerdFont"
+        },
+        {
+          "PackageIdentifier": "Discord.Discord"
+        },
+        {
+          "PackageIdentifier": "ElementLabs.LMStudio"
+        },
+        {
+          "PackageIdentifier": "Google.GoogleDrive"
+        },
+        {
+          "PackageIdentifier": "Microsoft.WindowsTerminal"
+        },
+        {
+          "PackageIdentifier": "Mozilla.Firefox"
+        },
+        {
+          "PackageIdentifier": "OBSProject.OBSStudio"
+        },
+        {
+          "PackageIdentifier": "Obsidian.Obsidian"
+        },
+        {
+          "PackageIdentifier": "Proton.ProtonVPN"
+        },
+        {
+          "PackageIdentifier": "Valve.Steam"
+        },
+        {
+          "PackageIdentifier": "Zoom.Zoom"
+        }
+      ],
+      "SourceDetails": {
+        "Argument": "https://winget.azureedge.net/cache",
+        "Identifier": "Microsoft.Winget.Source_8wekyb3d8bbwe",
+        "Name": "winget",
+        "Type": "Microsoft.PreIndexed.Package"
+      }
+    }
+  ],
+  "WinGetVersion": "1.9.25200"
+}

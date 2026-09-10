@@ -3,7 +3,10 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-chatgpt.url = "github:Moraxyc/nixpkgs/chatgpt-linux";
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     walker.url = "github:abenz1267/walker";
 
@@ -34,6 +37,15 @@
           ./hosts/lime
           chaotic.nixosModules.default
           inputs.home-manager.nixosModules.default
+        ];
+      };
+
+      nixosConfigurations.wsl = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs; };
+        modules = [
+          inputs.nixos-wsl.nixosModules.default
+          inputs.home-manager.nixosModules.default
+          ./hosts/wsl
         ];
       };
 

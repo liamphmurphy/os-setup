@@ -1,11 +1,4 @@
-{ pkgs, inputs, ... }:
-
-let
-  chatgptPkgs = import inputs.nixpkgs-chatgpt {
-    system = pkgs.system;
-    config.allowUnfree = true;
-  };
-in
+{ pkgs, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -53,13 +46,9 @@ in
     distrobox
     heroic
     lact
-    filen-desktop
-    element-desktop
     papirus-icon-theme
-    onlyoffice-desktopeditors
     zoom-us
     faugus-launcher
-    chatgptPkgs.chatgpt
 
     # User applications
     kdePackages.kate

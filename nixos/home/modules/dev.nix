@@ -57,8 +57,6 @@
       # ai things
       codex
       opencode
-
-      dropbox
     ]
     ++ lib.optionals (pkgs.stdenv.hostPlatform.system == "aarch64-darwin") [
       chatgpt
