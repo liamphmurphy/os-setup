@@ -60,7 +60,8 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
     - **Disable Fast Startup**: Ensures clean cold boots without stale hypervisor states or WSL time drift.
 12. **Windows Terminal**: Deploys `configs/terminal/settings.json` configured with JetBrains Mono Nerd Font and NixOS as the default profile.
 13. **WSL2 Tuning**: Deploys `configs/wsl/.wslconfig` (memory reclaim, mirrored networking, sparse VHD) to `$env:USERPROFILE\.wslconfig`.
-14. **Explorer Refresh**: Restarts File Explorer to apply all changes immediately.
+14. **Git Identity**: Configures `git config --global` user name and email to match your NixOS identity.
+15. **Explorer Refresh**: Restarts File Explorer to apply all changes immediately.
 
 > [!TIP]
 > Run PowerShell as **Administrator** so `setup.ps1` can disable system-level telemetry policies, apply Defender exclusions, and stop background services. If run non-elevated, all user-level tweaks (HKCU) will still succeed cleanly.

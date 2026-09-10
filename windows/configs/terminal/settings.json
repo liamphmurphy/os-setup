@@ -18,6 +18,7 @@
         "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
         "name": "NixOS",
         "source": "Windows.Terminal.Wsl",
+        "startingDirectory": "~",
         "hidden": false
       },
       {

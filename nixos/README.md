@@ -54,6 +54,9 @@ nixos/
 - **Integration**: `nix-community/NixOS-WSL` with systemd support and Windows interop (`wsl.interop.register = true`).
 - **Features**: Lightweight, developer-focused NixOS instance. Replicates Neovim (LazyVim), programming toolchains (Go, Rust, Python, Nix, K8s), zsh, git, and codex skills without GUI/desktop overhead.
 - **Git Authentication**: Configured in `home/wsl/default.nix` to use Windows Git Credential Manager (`git-credential-manager.exe`) directly from WSL.
+- **Native Docker**: Docker daemon runs natively under systemd in WSL2 with `docker-compose`, avoiding the need for Docker Desktop on Windows.
+- **POSIX Filesystem on Windows Drives**: Configured `wsl.wslConf.automount.options = "metadata,uid=1000,gid=100"` so `/mnt/c` respects Linux file permissions instead of default 0777.
+- **Windows Integration Bridge**: Provides a `~/winhome` symlink and alias to jump straight into your Windows user directory, plus `explore` to open Windows File Explorer from any Linux directory.
 
 ---
 

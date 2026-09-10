@@ -1,0 +1,12 @@
+# Nix build outputs & direnv
+result
+result-*
+.direnv
+
+# Windows host metadata
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# macOS metadata (for Darwin profile)
+.DS_Store

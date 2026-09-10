@@ -9,6 +9,7 @@
     enable = true;
     defaultUser = "liam";
     interop.register = true;
+    wslConf.automount.options = "metadata,uid=1000,gid=100";
   };
 
   networking.hostName = "wsl";
@@ -39,6 +40,8 @@
   };
 
   programs.nix-ld.enable = true;
+  virtualisation.docker.enable = true;
+  environment.systemPackages = [ pkgs.docker-compose ];
 
   home-manager = {
     useGlobalPkgs = true;
