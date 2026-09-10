@@ -78,7 +78,7 @@
         let
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
         in
-        pkgs.runCommand "nix-config-format-check"
+        pkgs.runCommand "os-setup-format-check"
           {
             nativeBuildInputs = [ pkgs.nixfmt-tree ];
           }

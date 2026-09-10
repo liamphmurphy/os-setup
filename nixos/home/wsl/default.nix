@@ -27,7 +27,7 @@
   ];
 
   programs.zsh.shellAliases = {
-    update = "nix flake update --flake ~/nix-config && sudo nixos-rebuild switch --flake ~/nix-config#wsl";
+    update = "nix flake update --flake ~/os-setup/nixos && sudo nixos-rebuild switch --flake ~/os-setup/nixos#wsl";
   };
 
   programs.home-manager.enable = true;

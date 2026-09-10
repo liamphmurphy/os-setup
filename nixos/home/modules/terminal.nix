@@ -50,7 +50,7 @@
 
     shellAliases = {
       ll = "ls -l";
-      update = "nix flake update --flake ~/nix-config && sudo nixos-rebuild switch --flake ~/nix-config#lime";
+      update = "nix flake update --flake ~/os-setup/nixos && sudo nixos-rebuild switch --flake ~/os-setup/nixos#lime";
       restartshell = "systemctl --user restart plasma-plasmashell";
       gfgp = "git fetch && git pull";
       v = "vim";
