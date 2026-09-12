@@ -57,6 +57,7 @@
       # ai things
       codex
       opencode
+      antigravity-cli
     ]
     ++ lib.optionals (pkgs.stdenv.hostPlatform.system == "aarch64-darwin") [
       chatgpt

@@ -12,6 +12,8 @@
     wslConf.automount.options = "metadata,uid=1000,gid=100";
   };
 
+  nixpkgs.hostPlatform = "x86_64-linux";
+
   networking.hostName = "wsl";
 
   time.timeZone = "America/Los_Angeles";
@@ -45,6 +47,7 @@
 
   home-manager = {
     useGlobalPkgs = true;
+    backupFileExtension = "backup";
     extraSpecialArgs = { inherit inputs; };
     users.liam = import ../../home/wsl;
   };

@@ -13,8 +13,9 @@
   # Codex's skill discovery does not reliably recognize SKILL.md when it is a
   # symlink into the Nix store. Keep the source declarative, then materialize
   # this entry as a regular file after Home Manager links the skill directory.
-  home.activation.codexProjectHarnessSkill = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+  home.activation.codexProjectHarnessSkill = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
     skill_file="$HOME/.codex/skills/project-harness/SKILL.md"
+    mkdir -p "$(dirname "$skill_file")"
     rm -f "$skill_file"
     cp ${../files/codex/project-harness/SKILL.md} "$skill_file"
     chmod 644 "$skill_file"

@@ -40,5 +40,13 @@
     credential.helper = "/mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager.exe";
   };
 
+  programs.gpg.enable = true;
+
+  services.gpg-agent = {
+    enable = true;
+    pinentry.package = pkgs.pinentry-curses;
+    enableZshIntegration = true;
+  };
+
   programs.home-manager.enable = true;
 }
