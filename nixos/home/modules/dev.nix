@@ -145,6 +145,141 @@
       },
     }
   '';
+
+  # Antigravity IDE Replication: Sidebar Terminal, Live Diffs & Context Sync
+  xdg.configFile."nvim/lua/plugins/antigravity.lua".text = ''
+    -- Auto-reload buffers when modified externally by agy
+    vim.opt.autoread = true
+    local autoread_group = vim.api.nvim_create_augroup("AntigravityAutoRead", { clear = true })
+    vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "TermLeave", "TermClose" }, {
+      group = autoread_group,
+      callback = function()
+        if vim.fn.getcmdwintype() == "" and vim.api.nvim_get_mode().mode ~= "c" then
+          vim.cmd("checktime")
+        end
+      end,
+    })
+
+    local function toggle_agy(args, win_opts)
+      local cmd = "agy"
+      if args and #args > 0 then
+        cmd = cmd .. " " .. table.concat(args, " ")
+      end
+      Snacks.terminal.toggle(cmd, {
+        win = win_opts or {
+          position = "right",
+          width = 0.38,
+        },
+        interactive = true,
+      })
+    end
+
+    local function send_selection_to_agy()
+      vim.cmd([[execute "normal! \<ESC>"]])
+      local start_line = vim.fn.line("'<")
+      local end_line = vim.fn.line("'>")
+      local file = vim.fn.expand("%:p:.")
+      local ref = string.format("@%s:L%d-L%d ", file, start_line, end_line)
+
+      local term = Snacks.terminal.get("agy", {
+        win = { position = "right", width = 0.38 },
+      })
+      if term then
+        term:show():focus()
+        vim.defer_fn(function()
+          vim.api.nvim_paste(ref, true, -1)
+        end, 100)
+      end
+    end
+
+    local function send_file_to_agy()
+      local file = vim.fn.expand("%:p:.")
+      local ref = string.format("@%s ", file)
+      local term = Snacks.terminal.get("agy", {
+        win = { position = "right", width = 0.38 },
+      })
+      if term then
+        term:show():focus()
+        vim.defer_fn(function()
+          vim.api.nvim_paste(ref, true, -1)
+        end, 100)
+      end
+    end
+
+    -- Fast toggle from terminal mode using <A-a>
+    vim.keymap.set("t", "<A-a>", function()
+      toggle_agy()
+    end, { desc = "Toggle Antigravity Sidebar" })
+
+    return {
+      -- Which-key group registration
+      {
+        "folke/which-key.nvim",
+        opts = {
+          spec = {
+            { "<leader>a", group = "antigravity / ai", icon = "󰚩 " },
+          },
+        },
+      },
+
+      -- Diffview for reviewing agent changes
+      {
+        "sindrets/diffview.nvim",
+        cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles", "DiffviewFileHistory" },
+        opts = {
+          enhanced_diff_hl = true,
+          view = {
+            default = {
+              layout = "diff2_horizontal",
+            },
+          },
+        },
+        keys = {
+          { "<leader>ad", "<cmd>DiffviewOpen<cr>", desc = "Review Changes (Diffview)" },
+          { "<leader>aD", "<cmd>DiffviewClose<cr>", desc = "Close Diffview" },
+          { "<leader>ah", "<cmd>DiffviewFileHistory %<cr>", desc = "Current File History" },
+        },
+      },
+
+      -- Keybindings for Antigravity CLI integration
+      {
+        "LazyVim/LazyVim",
+        keys = {
+          {
+            "<leader>aa",
+            function() toggle_agy({}, { position = "right", width = 0.38 }) end,
+            desc = "Toggle Antigravity Sidebar",
+          },
+          {
+            "<leader>ac",
+            function() toggle_agy({ "--continue" }, { position = "right", width = 0.38 }) end,
+            desc = "Antigravity Continue Session",
+          },
+          {
+            "<leader>ap",
+            function() toggle_agy({ "--mode", "plan" }, { position = "right", width = 0.38 }) end,
+            desc = "Antigravity Plan Mode",
+          },
+          {
+            "<leader>aA",
+            function() toggle_agy({}, { position = "float", width = 0.85, height = 0.85 }) end,
+            desc = "Toggle Antigravity Float",
+          },
+          {
+            "<leader>as",
+            send_selection_to_agy,
+            mode = "v",
+            desc = "Send Selection to Antigravity",
+          },
+          {
+            "<leader>af",
+            send_file_to_agy,
+            desc = "Send File Reference to Antigravity",
+          },
+        },
+      },
+    }
+  '';
   # --- END LazyVim bootstrap ---
 
   # OpenCode with the local Ollama server.
