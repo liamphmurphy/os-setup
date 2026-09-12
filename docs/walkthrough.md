@@ -36,8 +36,11 @@ All actions are grouped under `<leader>a` in `which-key`:
 
 | Keybinding | Mode | Action | Description |
 | :--- | :--- | :--- | :--- |
+| `<C-h>` | Normal & Terminal | **Smart Focus Toggle** | Bounces focus between Code and `agy` (enters insert mode in agy, normal mode in code) |
+| `<A-a>` | Normal & Terminal | **Universal Toggle** | Shows/hides the `agy` sidebar without touching window splits |
+| `<Esc>` | Terminal | **Normal Mode** | Single press immediately enters Normal mode in the terminal buffer |
+| `<C-w>` | Terminal | **Window Prefix** | Standard window navigation (`<C-w>h`, `<C-w>w`, `<C-w>p`) from terminal |
 | `<leader>aa` | Normal | **Toggle Sidebar** | Opens or hides the right-hand persistent `agy` sidebar |
-| `<A-a>` | Terminal | **Toggle Sidebar** | Instantly hides/shows the sidebar from terminal mode |
 | `<leader>ac` | Normal | **Continue Session** | Launches or restores `agy --continue` |
 | `<leader>ap` | Normal | **Plan Mode** | Launches `agy --mode plan` for planning sessions |
 | `<leader>aA` | Normal | **Toggle Float** | Opens `agy` in a centered floating scratchpad |

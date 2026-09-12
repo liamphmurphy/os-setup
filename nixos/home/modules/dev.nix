@@ -160,16 +160,42 @@
       end,
     })
 
+    local term_keys = {
+      term_normal = {
+        "<esc>",
+        "<cmd>stopinsert<cr>",
+        mode = "t",
+        desc = "Escape to normal mode",
+      },
+      nav_left = {
+        "<C-h>",
+        "<cmd>wincmd h<cr>",
+        mode = "t",
+        desc = "Jump to code editor (left window)",
+      },
+      nav_wincmd = {
+        "<C-w>",
+        "<C-\\><C-n><C-w>",
+        mode = "t",
+        desc = "Window command prefix",
+      },
+    }
+
+    local function get_win_opts(custom_opts)
+      return vim.tbl_deep_extend("force", {
+        position = "right",
+        width = 0.38,
+        keys = term_keys,
+      }, custom_opts or {})
+    end
+
     local function toggle_agy(args, win_opts)
       local cmd = "agy"
       if args and #args > 0 then
         cmd = cmd .. " " .. table.concat(args, " ")
       end
       Snacks.terminal.toggle(cmd, {
-        win = win_opts or {
-          position = "right",
-          width = 0.38,
-        },
+        win = get_win_opts(win_opts),
         interactive = true,
       })
     end
@@ -182,7 +208,7 @@
       local ref = string.format("@%s:L%d-L%d ", file, start_line, end_line)
 
       local term = Snacks.terminal.get("agy", {
-        win = { position = "right", width = 0.38 },
+        win = get_win_opts(),
       })
       if term then
         term:show():focus()
@@ -196,7 +222,7 @@
       local file = vim.fn.expand("%:p:.")
       local ref = string.format("@%s ", file)
       local term = Snacks.terminal.get("agy", {
-        win = { position = "right", width = 0.38 },
+        win = get_win_opts(),
       })
       if term then
         term:show():focus()
@@ -206,8 +232,37 @@
       end
     end
 
-    -- Fast toggle from terminal mode using <A-a>
-    vim.keymap.set("t", "<A-a>", function()
+    local function smart_toggle_focus_agy()
+      local term = Snacks.terminal.get("agy", get_win_opts())
+      local current_buf = vim.api.nvim_get_current_buf()
+      local current_win = vim.api.nvim_get_current_win()
+
+      local in_agy = term and term:buf_valid() and (current_buf == term.buf or current_win == term.win)
+
+      if in_agy then
+        -- Inside agy: jump to code window in Normal mode
+        vim.cmd("stopinsert")
+        vim.cmd("wincmd p")
+        if vim.api.nvim_get_current_win() == (term.win or -1) then
+          vim.cmd("wincmd h")
+        end
+      else
+        -- Inside code: if agy is open, focus it and start insert
+        if term and term:valid() then
+          term:focus()
+          vim.cmd("startinsert")
+        else
+          -- If agy is not open/visible, normal left window navigation
+          vim.cmd("wincmd h")
+        end
+      end
+    end
+
+    -- Smart toggle <C-h> between code editor and agy panel
+    vim.keymap.set({ "n", "t" }, "<C-h>", smart_toggle_focus_agy, { desc = "Smart Toggle Focus (Code <-> Antigravity)" })
+
+    -- Fast toggle sidebar visibility using <A-a> from both normal and terminal mode
+    vim.keymap.set({ "n", "t" }, "<A-a>", function()
       toggle_agy()
     end, { desc = "Toggle Antigravity Sidebar" })
 
