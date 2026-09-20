@@ -21,6 +21,7 @@
     pay-respects
     btop
     fastfetch
+    yt-dlp
 
     # nerd fonts
     nerd-fonts.jetbrains-mono

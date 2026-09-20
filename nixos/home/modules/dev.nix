@@ -16,7 +16,8 @@
       # general dev tools
       gnumake
 
-      # K8s
+      # Cloud & K8s
+      google-cloud-sdk
       kubectl
       kind
       kubernetes-helm
