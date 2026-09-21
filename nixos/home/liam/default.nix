@@ -14,6 +14,7 @@
     ../modules/terminal.nix
     ../modules/dev.nix
     ../modules/codex.nix
+    ../modules/gemini.nix
     # ../modules/hyprland.nix
   ];
 

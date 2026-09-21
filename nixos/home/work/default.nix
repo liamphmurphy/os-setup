@@ -9,6 +9,7 @@
     ../modules/terminal.nix
     ../modules/dev.nix
     ../modules/codex.nix
+    ../modules/gemini.nix
   ];
 
   programs.home-manager.enable = true;
