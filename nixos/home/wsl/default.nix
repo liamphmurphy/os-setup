@@ -9,11 +9,13 @@
   home.file."winhome".source = config.lib.file.mkOutOfStoreSymlink "/mnt/c/Users/liam";
 
   imports = [
+    ../modules/google-chrome.nix
     ../modules/git.nix
     ../modules/terminal.nix
     ../modules/dev.nix
     ../modules/codex.nix
     ../modules/gemini.nix
+    ../modules/cliphist.nix
   ];
 
   fonts.fontconfig.enable = true;

@@ -27,7 +27,7 @@ winget import -i winget.json --accept-package-agreements --accept-source-agreeme
 ```
 
 ### Included Packages
-- **Browsers & Internet**: Mozilla Firefox (`Mozilla.Firefox`), Proton VPN (`Proton.ProtonVPN`)
+- **Browsers & Internet**: Google Chrome (`Google.Chrome`), Mozilla Firefox (`Mozilla.Firefox`), Proton VPN (`Proton.ProtonVPN`)
 - **Productivity & Notes**: Obsidian (`Obsidian.Obsidian`), Google Drive (`Google.GoogleDrive`)
 - **Communication & Media**: Discord (`Discord.Discord`), Zoom (`Zoom.Zoom`), Audacity (`Audacity.Audacity`), OBS Studio (`OBSProject.OBSStudio`)
 - **Gaming & AI**: Steam (`Valve.Steam`), LM Studio (`ElementLabs.LMStudio`)

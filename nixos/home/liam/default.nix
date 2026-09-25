@@ -10,6 +10,7 @@
     ../modules/plasma.nix
     ../modules/webapps.nix
     ../modules/firefox.nix
+    ../modules/google-chrome.nix
     ../modules/git.nix
     ../modules/terminal.nix
     ../modules/dev.nix

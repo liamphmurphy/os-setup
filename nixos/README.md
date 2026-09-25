@@ -27,6 +27,7 @@ nixos/
 │       ├── dev.nix                 # Programming runtimes (Go, Rust, Python, Nix) & LazyVim
 │       ├── firefox.nix             # Firefox policies and privacy settings
 │       ├── git.nix                 # Git configuration & identity
+│       ├── google-chrome.nix       # Google Chrome with Wayland/Ozone acceleration
 │       ├── plasma.nix              # KDE Plasma 6 desktop manager configuration
 │       ├── terminal.nix            # Ghostty, zsh, oh-my-zsh, fastfetch
 │       └── webapps.nix             # Chromium webapp wrappers (YT Music, etc.)

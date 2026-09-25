@@ -13,6 +13,9 @@
     [
       uv
 
+      # android dev
+      android-tools
+
       # general dev tools
       gnumake
 
@@ -22,6 +25,9 @@
       kind
       kubernetes-helm
       kubectx
+
+      # Java
+      jre
 
       # VCS & editor deps
       git

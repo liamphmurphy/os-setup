@@ -20,6 +20,9 @@
           "PackageIdentifier": "Git.Git"
         },
         {
+          "PackageIdentifier": "Google.Chrome"
+        },
+        {
           "PackageIdentifier": "Google.GoogleDrive"
         },
         {
