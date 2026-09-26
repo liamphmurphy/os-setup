@@ -8,6 +8,10 @@
   # Go toolchain via HM
   programs.go.enable = true;
 
+  home.sessionPath = [
+    "$HOME/.local/bin"
+  ];
+
   home.packages =
     with pkgs;
     [
