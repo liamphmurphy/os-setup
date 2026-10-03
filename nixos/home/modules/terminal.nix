@@ -54,6 +54,7 @@
       restartshell = "systemctl --user restart plasma-plasmashell";
       gfgp = "git fetch && git pull";
       v = "vim";
+      t = "tmux";
     };
 
     history.size = 10000;

@@ -43,6 +43,9 @@
 
   programs.nix-ld.enable = true;
   virtualisation.docker.enable = true;
+  # WSL mirrored networking routes 127.0.0.1 via loopback0 rather than lo, so
+  # Docker's raw-table anti-spoofing DROP rules black-hole published ports.
+  systemd.services.docker.environment.DOCKER_INSECURE_NO_IPTABLES_RAW = "1";
   environment.systemPackages = [ pkgs.docker-compose ];
 
   home-manager = {
