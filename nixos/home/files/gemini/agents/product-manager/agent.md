@@ -3,7 +3,7 @@ name: product-manager
 description: Defines user stories and Gherkin acceptance criteria, then checks deliverables against user goals.
 subagent: true
 mainAgent: true
-model: gemini-3.8-flash-medium
+model: flash
 tools:
   - view_file
   - list_dir

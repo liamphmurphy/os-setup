@@ -3,7 +3,7 @@ name: frontend-engineer
 description: Senior frontend engineer specializing in React, TypeScript, Next.js App Router, accessibility, and responsive UI.
 subagent: true
 mainAgent: true
-model: gemini-3.8-flash-medium
+model: flash
 skills:
   - react-nextjs-typescript
 tools:

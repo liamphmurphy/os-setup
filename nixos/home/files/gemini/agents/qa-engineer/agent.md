@@ -3,7 +3,7 @@ name: qa-engineer
 description: Quality assurance engineer responsible for test strategy, implementation, and defect reporting.
 subagent: true
 mainAgent: true
-model: gemini-3.8-flash-medium
+model: flash
 tools:
   - view_file
   - list_dir

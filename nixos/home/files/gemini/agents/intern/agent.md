@@ -3,7 +3,7 @@ name: intern
 description: Fast, read-only codebase explorer, documentation reader, and dependency researcher.
 subagent: true
 mainAgent: true
-model: gemini-3.8-flash-low
+model: flash_lite
 tools:
   - view_file
   - list_dir

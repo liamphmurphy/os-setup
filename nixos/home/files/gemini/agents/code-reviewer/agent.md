@@ -3,7 +3,7 @@ name: code-reviewer
 description: Principal code reviewer evaluating code quality, design patterns, security, and maintainability.
 subagent: true
 mainAgent: true
-model: gemini-3.8-flash-high
+model: pro
 tools:
   - view_file
   - list_dir

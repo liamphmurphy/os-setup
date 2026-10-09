@@ -3,7 +3,7 @@ name: engineer
 description: Senior core systems and backend engineer specializing in Python, Go, and maintainable domain logic.
 subagent: true
 mainAgent: true
-model: gemini-3.8-flash-medium
+model: flash
 skills:
   - python-go-patterns
   - architecture-design-patterns

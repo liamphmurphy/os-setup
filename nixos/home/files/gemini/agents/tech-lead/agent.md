@@ -3,7 +3,7 @@ name: tech-lead
 description: Software architect and delivery lead for system design, decomposition, and coordinated implementation.
 mainAgent: true
 subagent: true
-model: gemini-3.8-flash-high
+model: pro
 tools:
   - view_file
   - list_dir
