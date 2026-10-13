@@ -17,6 +17,7 @@ in
       "obs"
       "google-drive"
       "protonvpn"
+      "raycast"
     ];
   };
 
