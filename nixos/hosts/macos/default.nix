@@ -22,6 +22,7 @@ in
       "protonvpn"
       "raycast"
       "alt-tab"
+      "android-studio"
     ] ++ lib.optionals (config.system.primaryUser == "liammurphy") [
       # Personal Mac only; work continues to use Colima.
       "orbstack"
