@@ -6,6 +6,8 @@
   home.stateVersion = "25.05";
 
   imports = [
+    ../modules/common.nix
+    ../modules/git.nix
     ../modules/terminal.nix
     ../modules/tmux.nix
     ../modules/dev.nix
