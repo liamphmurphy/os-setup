@@ -18,6 +18,7 @@ in
       "google-drive"
       "protonvpn"
       "raycast"
+      "alt-tab"
     ];
   };
 
