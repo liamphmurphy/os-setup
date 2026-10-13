@@ -30,3 +30,16 @@ The Homebrew cleanup policy is `none`, so activating on an existing work Mac wil
 - The initial `nix flake lock` update and an Apple Silicon evaluation are still required.
 - Existing standalone `homeConfigurations.work` and `homeConfigurations.personal` remain available, but use **nix-darwin** as the primary macOS activation path to manage both Home Manager and casks.
 - Firefox profile/policy management is not yet ported to macOS; only the native app is installed.
+
+## macOS preferences
+
+Both profiles set the following declaratively:
+
+- Finder: path bar, search current folder, show extensions and hidden files, default list view.
+- Dock: auto-hide, instant reveal, no recent apps, stable Spaces order.
+- Keyboard: faster repeat (initial delay 15, repeat interval 2), no press-and-hold accent menu.
+- Trackpad: tap to click.
+- Security: Touch ID authentication for `sudo` via `sudo_local`.
+- Screenshots: `~/Pictures/Screenshots`, created automatically on activation.
+
+Some preferences may require signing out or restarting Finder/Dock to take effect. Touch ID must be enrolled in macOS.
