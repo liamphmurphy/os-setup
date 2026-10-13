@@ -66,5 +66,18 @@ in
 
   security.pam.services.sudo_local.touchIdAuth = true;
 
+  # Prune old, unreferenced Nix generations weekly.
+  nix.gc = {
+    automatic = true;
+    interval = {
+      Weekday = 7;
+      Hour = 3;
+      Minute = 0;
+    };
+    options = "--delete-older-than 7d";
+  };
+
+  nix.optimise.automatic = true;
+
   system.stateVersion = 7;
 }
