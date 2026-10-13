@@ -15,6 +15,15 @@
     ../modules/gemini.nix
   ];
 
+  # Android Studio installs SDK components through its SDK Manager.
+  # Keep one writable SDK in the standard macOS location.
+  home.sessionVariables.ANDROID_HOME = "$HOME/Library/Android/sdk";
+  home.sessionPath = [
+    "$HOME/Library/Android/sdk/platform-tools"
+    "$HOME/Library/Android/sdk/emulator"
+    "$HOME/Library/Android/sdk/cmdline-tools/latest/bin"
+  ];
+
   programs.rectangle.enable = true;
 
   programs.home-manager.enable = true;
