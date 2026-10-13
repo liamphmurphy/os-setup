@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, ... }:
 
 let
   screenshotsDir = "/Users/${config.system.primaryUser}/Pictures/Screenshots";
@@ -19,6 +19,9 @@ in
       "protonvpn"
       "raycast"
       "alt-tab"
+    ] ++ lib.optionals (config.system.primaryUser == "liammurphy") [
+      # Personal Mac only; work continues to use Colima.
+      "orbstack"
     ];
   };
 
