@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, ... }:
 
 let
   screenshotsDir = "/Users/${config.system.primaryUser}/Pictures/Screenshots";
@@ -13,7 +13,7 @@ in
     masApps = {
       Xcode = 497799835;
     };
-    onActivation.cleanup = "none"; # Do not remove existing work-machine apps.
+    onActivation.cleanup = "none"; # Keep unrelated Homebrew apps untouched.
     casks = [
       "firefox"
       "obsidian"
@@ -23,13 +23,11 @@ in
       "raycast"
       "alt-tab"
       "android-studio"
-    ] ++ lib.optionals (config.system.primaryUser == "liammurphy") [
-      # Personal Mac only; work continues to use Colima.
       "orbstack"
     ];
   };
 
-  # Preferences shared by work and personal Macs.
+  # Personal Mac preferences.
   system.defaults = {
     finder = {
       ShowPathbar = true;
