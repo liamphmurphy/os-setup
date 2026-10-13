@@ -16,6 +16,11 @@
       inputs.home-manager.follows = "home-manager";
     };
 
+    darwin = {
+      url = "github:nix-darwin/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -28,6 +33,7 @@
       nixpkgs,
       chaotic,
       home-manager,
+      darwin,
       ...
     }:
     {
@@ -84,6 +90,35 @@
         {
           work = mkMacOS "lmurphy";
           personal = mkMacOS "liammurphy";
+        };
+
+      # Native macOS provisioning: Homebrew apps + shared Home Manager setup.
+      darwinConfigurations =
+        let
+          mkDarwin = username: darwin.lib.darwinSystem {
+            system = "aarch64-darwin";
+            specialArgs = { inherit inputs; };
+            modules = [
+              ./hosts/macos
+              home-manager.darwinModules.home-manager
+              {
+                system.primaryUser = username;
+                users.users.${username}.home = "/Users/${username}";
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+                home-manager.extraSpecialArgs = { inherit inputs; };
+                home-manager.users.${username} = {
+                  imports = [ ./home/macos ];
+                  home.username = username;
+                  home.homeDirectory = "/Users/${username}";
+                };
+              }
+            ];
+          };
+        in
+        {
+          work = mkDarwin "lmurphy";
+          personal = mkDarwin "liammurphy";
         };
 
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-tree;
