@@ -16,6 +16,11 @@
       inputs.home-manager.follows = "home-manager";
     };
 
+    darwin = {
+      url = "github:nix-darwin/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -28,6 +33,7 @@
       nixpkgs,
       chaotic,
       home-manager,
+      darwin,
       ...
     }:
     {
@@ -62,29 +68,30 @@
         ];
       };
 
-      # Both macOS machines use identical Home Manager modules; only the
-      # macOS short account name / home directory differs.
-      homeConfigurations =
-        let
-          mkMacOS = username: home-manager.lib.homeManagerConfiguration {
-            pkgs = import nixpkgs {
-              system = "aarch64-darwin";
-              config.allowUnfree = true;
+      # Personal Apple Silicon Mac: nix-darwin owns system configuration
+      # and integrates the same reusable Home Manager modules as Linux.
+      darwinConfigurations.personal = darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/macos
+          home-manager.darwinModules.home-manager
+          {
+            system.primaryUser = "liammurphy";
+            users.users.liammurphy.home = "/Users/liammurphy";
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = { inherit inputs; };
+            home-manager.users.liammurphy = { lib, ... }: {
+              imports = [ ./home/macos ];
+              home.username = "liammurphy";
+              home.homeDirectory = "/Users/liammurphy";
+              programs.zsh.shellAliases.update = lib.mkForce
+                "nix flake update --flake ~/os-setup/nixos && sudo darwin-rebuild switch --flake ~/os-setup/nixos#personal";
             };
-            extraSpecialArgs = { inherit inputs; };
-            modules = [
-              ./home/macos
-              {
-                home.username = username;
-                home.homeDirectory = "/Users/${username}";
-              }
-            ];
-          };
-        in
-        {
-          work = mkMacOS "lmurphy";
-          personal = mkMacOS "liammurphy";
-        };
+          }
+        ];
+      };
 
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-tree;
       formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixfmt-tree;
