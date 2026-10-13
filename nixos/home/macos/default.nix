@@ -15,5 +15,7 @@
     ../modules/gemini.nix
   ];
 
+  programs.rectangle.enable = true;
+
   programs.home-manager.enable = true;
 }
