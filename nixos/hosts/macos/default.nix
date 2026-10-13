@@ -10,6 +10,9 @@ in
 
   homebrew = {
     enable = true;
+    masApps = {
+      Xcode = 497799835;
+    };
     onActivation.cleanup = "none"; # Do not remove existing work-machine apps.
     casks = [
       "firefox"
