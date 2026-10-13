@@ -61,3 +61,7 @@ Android Studio is installed as a Homebrew cask on both Macs. The existing shared
 macOS requires no vendor-specific USB driver. Android Studio and its SDK Manager manage downloaded SDK/build tools; they aren't pinned by this flake. The project Gradle wrapper should specify the project's Gradle version. For a physical Pixel, no emulator image is required.
 
 **Note:** Some Android Studio builds may use a different SDK location, so verify Android Studio's SDK path matches `ANDROID_HOME`. Android Studio includes its own JDK for Gradle by default.
+
+## Nix store maintenance
+
+nix-darwin runs garbage collection every Sunday at 03:00, deleting eligible generations older than seven days (`--delete-older-than 7d`). The active system and referenced packages remain protected. Automatic store optimization deduplicates identical store contents. Container images, Xcode caches and Android SDK files are outside Nix GC.
