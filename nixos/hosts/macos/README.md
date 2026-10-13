@@ -1,39 +1,34 @@
 # macOS setup (Apple Silicon)
 
-Both Macs share `nixos/home/macos/default.nix` and its Home Manager modules.
-
-| Flake target | macOS account |
-| --- | --- |
-| `work` | `lmurphy` |
-| `personal` | `liammurphy` |
+The single personal Apple Silicon Mac uses `nixos/home/macos/default.nix` and shared Home Manager modules. Target: `darwinConfigurations.personal`, account `liammurphy`, home `/Users/liammurphy`. No employer-managed macOS host is configured.
 
 ## Initial installation
 
-1. Install Nix with a macOS-compatible multi-user installer.
+1. Complete macOS onboarding as `liammurphy`; install Xcode Command Line Tools (`xcode-select --install`) and Nix with a macOS-compatible multi-user installer.
 2. Install [Homebrew](https://brew.sh/) separately. nix-darwin **manages** Homebrew casks but does not install Homebrew itself.
 3. Clone this repository into `~/os-setup`.
 4. From `~/os-setup/nixos`, update the flake lock to capture the new nix-darwin input: `nix flake lock`. Commit the generated `flake.lock` before treating the build as reproducible.
-5. Preview the configuration: `nix build .#darwinConfigurations.personal.system` (or `work`).
-6. Bootstrap nix-darwin following its [official installation instructions](https://github.com/nix-darwin/nix-darwin), using `.#personal` or `.#work`. Subsequent updates: `sudo darwin-rebuild switch --flake ~/os-setup/nixos#personal` (or `#work`).
+5. Preview the configuration: `nix build .#darwinConfigurations.personal.system`.
+6. Bootstrap nix-darwin following its [official installation instructions](https://github.com/nix-darwin/nix-darwin), using `.#personal`. Subsequent updates: `sudo darwin-rebuild switch --flake ~/os-setup/nixos#personal`.
 
 ## Apps
 
-Homebrew casks, managed by nix-darwin: Firefox, Obsidian, OBS Studio, Google Drive, Proton VPN.
+Homebrew casks, managed by nix-darwin: Firefox, Obsidian, OBS Studio, Google Drive, Proton VPN, Raycast, AltTab, Android Studio and OrbStack. Xcode is managed through the Mac App Store integration.
 
 Home Manager: Ghostty (via `ghostty-bin`, shared shell settings) and Rectangle.
 
-The Homebrew cleanup policy is `none`, so activating on an existing work Mac will not automatically uninstall unrelated apps.
+The Homebrew cleanup policy is `none`, so activation will not automatically uninstall unrelated apps.
 
 ## Before activating
 
-- Confirm the actual short username on each Mac matches the flake target.
+- Confirm the personal Mac short username is `liammurphy`; do not activate on an employer-managed Mac.
 - The initial `nix flake lock` update and an Apple Silicon evaluation are still required.
-- Existing standalone `homeConfigurations.work` and `homeConfigurations.personal` remain available, but use **nix-darwin** as the primary macOS activation path to manage both Home Manager and casks.
+- The personal Mac is managed through **nix-darwin** with integrated Home Manager; standalone macOS Home Manager and work-Mac targets have been removed.
 - Firefox profile/policy management is not yet ported to macOS; only the native app is installed.
 
 ## macOS preferences
 
-Both profiles set the following declaratively:
+The personal profile sets the following declaratively:
 
 - Finder: path bar, search current folder, show extensions and hidden files, default list view.
 - Dock: auto-hide, instant reveal, no recent apps, stable Spaces order.
@@ -50,7 +45,7 @@ Raycast is installed through Homebrew alongside Rectangle. Keep macOS Spotlight 
 
 ## Android development on a physical Pixel
 
-Android Studio is installed as a Homebrew cask on both Macs. The existing shared `dev.nix` already provides `android-tools` (ADB/fastboot), so no separate Homebrew Platform Tools installation is necessary.
+Android Studio is installed as a Homebrew cask on the personal Mac. The existing shared `dev.nix` already provides `android-tools` (ADB/fastboot), so no separate Homebrew Platform Tools installation is necessary.
 
 1. Launch Android Studio and complete its setup wizard. In **Settings → Languages & Frameworks → Android SDK**, install a current Android SDK Platform, Android SDK Build-Tools, SDK Platform-Tools, and SDK Command-line Tools (latest). Use the default SDK directory `~/Library/Android/sdk`.
 2. Home Manager sets `ANDROID_HOME` to that SDK directory and adds its platform-tools, emulator and command-line tools to `PATH`. Restart the terminal after activation. Check `which adb` and `adb version` to confirm which ADB is active; avoid running two versions/servers simultaneously.
