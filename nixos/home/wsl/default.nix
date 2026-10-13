@@ -12,6 +12,7 @@
     ../modules/common.nix
     ../modules/google-chrome.nix
     ../modules/git.nix
+    ../modules/ssh.nix
     ../modules/terminal.nix
     ../modules/tmux.nix
     ../modules/dev.nix
