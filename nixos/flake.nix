@@ -107,10 +107,12 @@
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
                 home-manager.extraSpecialArgs = { inherit inputs; };
-                home-manager.users.${username} = {
+                home-manager.users.${username} = { lib, ... }: {
                   imports = [ ./home/macos ];
                   home.username = username;
                   home.homeDirectory = "/Users/${username}";
+                  programs.zsh.shellAliases.update = lib.mkForce
+                    "nix flake update --flake ~/os-setup/nixos && sudo darwin-rebuild switch --flake ~/os-setup/nixos#${if username == "lmurphy" then "work" else "personal"}";
                 };
               }
             ];
