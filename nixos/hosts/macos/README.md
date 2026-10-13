@@ -43,3 +43,7 @@ Both profiles set the following declaratively:
 - Screenshots: `~/Pictures/Screenshots`, created automatically on activation.
 
 Some preferences may require signing out or restarting Finder/Dock to take effect. Touch ID must be enrolled in macOS.
+
+## Raycast
+
+Raycast is installed through Homebrew alongside Rectangle. Keep macOS Spotlight indexing enabled; optionally assign Command-Space to Raycast in its onboarding/Hotkey settings and move Spotlight to another shortcut. Configure Raycast clipboard history and accessibility permissions after first launch. Rectangle remains installed for dedicated window shortcuts.
