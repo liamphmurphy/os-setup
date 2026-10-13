@@ -8,6 +8,7 @@
   imports = [
     ../modules/common.nix
     ../modules/git.nix
+    ../modules/ssh.nix
     ../modules/terminal.nix
     ../modules/tmux.nix
     ../modules/dev.nix

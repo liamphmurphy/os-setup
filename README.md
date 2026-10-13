@@ -95,3 +95,11 @@ This profile is for the personal Mac with macOS short username `liammurphy` (hom
 8. Sign into the Mac App Store for Xcode installation; open Xcode and Android Studio to finish their first-run setup and download the required simulator/SDK components. Set up Raycast hotkeys, app permissions, and Pixel USB debugging as needed.
 
 **Important:** This configuration has not yet been evaluated or activated on the new Mac. Do not run `darwin-rebuild switch` until the build succeeds and the flake lockfile is committed. See [macOS setup notes](nixos/hosts/macos/README.md) for apps, preferences, Android USB debugging, and Nix maintenance details.
+
+---
+
+## GitHub authentication (NixOS and macOS)
+
+Home Manager configures GitHub SSH access for NixOS desktop, NixOS-WSL and personal macOS. Generate a unique SSH key on each machine, add the public key to GitHub, and use Apple Keychain for the personal Mac. **GPG is not required** for GitHub SSH authentication; commit signing remains optional.
+
+Follow the [SSH setup guide](docs/github-ssh.md) after activating a new machine.

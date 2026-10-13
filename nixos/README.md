@@ -102,3 +102,7 @@ cd ~/os-setup/nixos
 nix flake check
 nix fmt -- --ci
 ```
+
+## GitHub SSH access
+
+The shared `home/modules/ssh.nix` configures GitHub SSH authentication across NixOS desktop, WSL and macOS. See the [GitHub SSH onboarding guide](../docs/github-ssh.md) for per-system key creation and registration. GPG signing is optional.

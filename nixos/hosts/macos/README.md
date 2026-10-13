@@ -60,3 +60,7 @@ macOS requires no vendor-specific USB driver. Android Studio and its SDK Manager
 ## Nix store maintenance
 
 nix-darwin runs garbage collection every Sunday at 03:00, deleting eligible generations older than seven days (`--delete-older-than 7d`). The active system and referenced packages remain protected. Automatic store optimization deduplicates identical store contents. Container images, Xcode caches and Android SDK files are outside Nix GC.
+
+## GitHub SSH access
+
+After applying the personal macOS profile, follow the [GitHub SSH onboarding guide](../../../docs/github-ssh.md) to create a local key, add it to the Apple Keychain, and register its public key with GitHub. GPG is not required.
