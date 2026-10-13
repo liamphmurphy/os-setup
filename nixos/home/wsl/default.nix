@@ -9,6 +9,7 @@
   home.file."winhome".source = config.lib.file.mkOutOfStoreSymlink "/mnt/c/Users/liam";
 
   imports = [
+    ../modules/common.nix
     ../modules/google-chrome.nix
     ../modules/git.nix
     ../modules/terminal.nix
@@ -17,21 +18,6 @@
     ../modules/codex.nix
     ../modules/gemini.nix
     ../modules/cliphist.nix
-  ];
-
-  fonts.fontconfig.enable = true;
-
-  home.packages = with pkgs; [
-    pay-respects
-    btop
-    fastfetch
-    yt-dlp
-
-    # nerd fonts
-    nerd-fonts.jetbrains-mono
-    nerd-fonts.iosevka
-    nerd-fonts.fira-code
-    font-awesome
   ];
 
   programs.zsh.shellAliases = {

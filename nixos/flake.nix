@@ -62,14 +62,29 @@
         ];
       };
 
-      homeConfigurations.work = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs {
-          system = "aarch64-darwin";
-          config.allowUnfree = true;
+      # Both macOS machines use identical Home Manager modules; only the
+      # macOS short account name / home directory differs.
+      homeConfigurations =
+        let
+          mkMacOS = username: home-manager.lib.homeManagerConfiguration {
+            pkgs = import nixpkgs {
+              system = "aarch64-darwin";
+              config.allowUnfree = true;
+            };
+            extraSpecialArgs = { inherit inputs; };
+            modules = [
+              ./home/macos
+              {
+                home.username = username;
+                home.homeDirectory = "/Users/${username}";
+              }
+            ];
+          };
+        in
+        {
+          work = mkMacOS "lmurphy";
+          personal = mkMacOS "liammurphy";
         };
-        extraSpecialArgs = { inherit inputs; };
-        modules = [ ./home/work ];
-      };
 
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-tree;
       formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixfmt-tree;

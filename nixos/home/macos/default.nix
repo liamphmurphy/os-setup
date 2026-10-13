@@ -1,11 +1,13 @@
 { ... }:
 
 {
-  home.username = "lmurphy";
-  home.homeDirectory = "/Users/lmurphy";
+  # Shared across work and personal Apple Silicon Macs.
+  # Account-specific username and home directory are supplied in flake.nix.
   home.stateVersion = "25.05";
 
   imports = [
+    ../modules/common.nix
+    ../modules/git.nix
     ../modules/terminal.nix
     ../modules/tmux.nix
     ../modules/dev.nix

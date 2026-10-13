@@ -7,6 +7,7 @@
   home.homeDirectory = "/home/liam";
 
   imports = [
+    ../modules/common.nix
     ../modules/plasma.nix
     ../modules/webapps.nix
     ../modules/firefox.nix
@@ -29,11 +30,7 @@
   # release notes.
   home.stateVersion = "25.05"; # Please read the comment before changing.
 
-  fonts.fontconfig.enable = true;
-
   home.packages = with pkgs; [
-    pay-respects
-    btop
 
     # Desktop applications
     vesktop
@@ -42,7 +39,6 @@
     obs-studio
     obsidian
     protonup-qt
-    fastfetch
     proton-vpn
     audacity
     gamemode
@@ -62,14 +58,8 @@
 
     lmstudio
 
-    # nerd fonts, for things like waybar, some vim things etc
-    nerd-fonts.jetbrains-mono
-    nerd-fonts.iosevka
-    nerd-fonts.fira-code
-    font-awesome
 
     gyb
-    yt-dlp
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
