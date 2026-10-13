@@ -10,6 +10,7 @@
 
   programs.ghostty = {
     enable = true;
+    package = if pkgs.stdenv.hostPlatform.isDarwin then pkgs.ghostty-bin else pkgs.ghostty;
     settings = {
       confirm-close-surface = false;
       background-opacity = 0.7;
@@ -50,11 +51,14 @@
 
     shellAliases = {
       ll = "ls -l";
-      update = lib.mkDefault "nix flake update --flake ~/os-setup/nixos && sudo nixos-rebuild switch --flake ~/os-setup/nixos#lime";
-      restartshell = "systemctl --user restart plasma-plasmashell";
       gfgp = "git fetch && git pull";
       v = "vim";
       t = "tmux";
+    } // lib.optionalAttrs pkgs.stdenv.hostPlatform.isDarwin {
+      update = "nix flake update --flake ~/os-setup/nixos && home-manager switch --flake ~/os-setup/nixos#personal";
+    } // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
+      update = lib.mkDefault "nix flake update --flake ~/os-setup/nixos && sudo nixos-rebuild switch --flake ~/os-setup/nixos#lime";
+      restartshell = "systemctl --user restart plasma-plasmashell";
     };
 
     history.size = 10000;
