@@ -55,7 +55,7 @@
       v = "vim";
       t = "tmux";
     } // lib.optionalAttrs pkgs.stdenv.hostPlatform.isDarwin {
-      update = "nix flake update --flake ~/os-setup/nixos && home-manager switch --flake ~/os-setup/nixos#personal";
+      update = "nix flake update --flake ~/os-setup/nixos && home-manager switch --flake ~/os-setup/nixos#${if config.home.username == "lmurphy" then "work" else "personal"}";
     } // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
       update = lib.mkDefault "nix flake update --flake ~/os-setup/nixos && sudo nixos-rebuild switch --flake ~/os-setup/nixos#lime";
       restartshell = "systemctl --user restart plasma-plasmashell";
