@@ -1,30 +1,53 @@
 # macOS setup (Apple Silicon)
 
-The single personal Apple Silicon Mac uses `nixos/home/macos/default.nix` and shared Home Manager modules. Target: `darwinConfigurations.personal`, account `liammurphy`, home `/Users/liammurphy`. No employer-managed macOS host is configured.
+The personal Apple Silicon Mac uses `nixos/home/macos/default.nix` and shared Home Manager modules. Account: `liammurphy`, home: `/Users/liammurphy`.
 
-## Initial installation
+## Terminal and development tools only (standalone Home Manager)
 
-1. Complete macOS onboarding as `liammurphy`; install Xcode Command Line Tools (`xcode-select --install`) and Nix with a macOS-compatible multi-user installer.
-2. Install [Homebrew](https://brew.sh/) separately. nix-darwin **manages** Homebrew casks but does not install Homebrew itself.
-3. Clone this repository into `~/os-setup`.
-4. From `~/os-setup/nixos`, update the flake lock to capture the new nix-darwin input: `nix flake lock`. Commit the generated `flake.lock` before treating the build as reproducible.
-5. Preview the configuration: `nix build .#darwinConfigurations.personal.system`.
-6. Bootstrap nix-darwin following its [official installation instructions](https://github.com/nix-darwin/nix-darwin), using `.#personal`. Subsequent updates: `sudo darwin-rebuild switch --flake ~/os-setup/nixos#personal`.
+Follow the [root README's macOS quick start](../../../README.md#3-personal-macos-setup-apple-silicon) for installation, CLI feature settings, and first activation with dotfile backups. The standalone target is `homeConfigurations.personal`.
+
+After bootstrap, run this from the repository root:
+
+```sh
+home-manager switch --flake ./nixos#personal
+```
+
+The `update` shell alias updates flake inputs and switches this Home Manager profile using `~/repos/os-setup/nixos`. Adjust the alias in `home/modules/terminal.nix` if you clone elsewhere. Standalone activation does not apply the system preferences or Homebrew apps described below.
+
+## Optional full macOS configuration (nix-darwin)
+
+Use `darwinConfigurations.personal` only when you also want macOS preferences, Homebrew applications, and system maintenance managed declaratively. This target integrates Home Manager; choose it instead of independently activating the standalone profile for the same user.
+
+1. Homebrew is installed and managed by [nix-homebrew](https://github.com/zhaofengli/nix-homebrew); an existing `/opt/homebrew` install is migrated automatically (`autoMigrate`), so no manual install is needed.
+2. From the repository root, preview the system build:
+
+   ```sh
+   nix build ./nixos#darwinConfigurations.personal.system
+   ```
+
+3. Bootstrap nix-darwin following its [official installation instructions](https://github.com/nix-darwin/nix-darwin#installation), targeting `~/repos/os-setup/nixos#personal`. `darwin-rebuild` is available only after nix-darwin is installed. Subsequent updates:
+
+   ```sh
+   sudo darwin-rebuild switch --flake ~/repos/os-setup/nixos#personal
+   ```
+
+The sections below describe the optional nix-darwin configuration unless explicitly referring to Home Manager.
 
 ## Apps
 
-Homebrew casks, managed by nix-darwin: Firefox, Obsidian, OBS Studio, Google Drive, Proton VPN, Raycast, AltTab, Android Studio and OrbStack. Xcode is managed through the Mac App Store integration.
+Homebrew casks, managed by nix-darwin: Obsidian, Proton VPN, Raycast, Rectangle, AltTab and Android Studio. Xcode is managed through the Mac App Store integration.
 
-Home Manager: Ghostty (via `ghostty-bin`, shared shell settings) and Rectangle.
+Home Manager: Ghostty (via `ghostty-bin`, shared shell settings).
+
+Home Manager copies app bundles into `~/Applications/Home Manager Apps` so Spotlight can index them. After activation, allow Spotlight time to discover newly installed apps.
 
 The Homebrew cleanup policy is `none`, so activation will not automatically uninstall unrelated apps.
 
 ## Before activating
 
 - Confirm the personal Mac short username is `liammurphy`; do not activate on an employer-managed Mac.
-- The initial `nix flake lock` update and an Apple Silicon evaluation are still required.
-- The personal Mac is managed through **nix-darwin** with integrated Home Manager; standalone macOS Home Manager and work-Mac targets have been removed.
-- Firefox profile/policy management is not yet ported to macOS; only the native app is installed.
+- Build the selected target successfully before activating it.
+- Both standalone Home Manager and nix-darwin personal targets are available; no work-Mac target is configured.
 
 ## macOS preferences
 

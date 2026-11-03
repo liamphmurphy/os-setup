@@ -5,6 +5,10 @@
   # Account-specific username and home directory are supplied in flake.nix.
   home.stateVersion = "25.05";
 
+  # Copy app bundles so Spotlight can index them outside the Nix store.
+  targets.darwin.linkApps.enable = false;
+  targets.darwin.copyApps.enable = true;
+
   imports = [
     ../modules/common.nix
     ../modules/git.nix
@@ -24,8 +28,6 @@
     "$HOME/Library/Android/sdk/emulator"
     "$HOME/Library/Android/sdk/cmdline-tools/latest/bin"
   ];
-
-  programs.rectangle.enable = true;
 
   programs.home-manager.enable = true;
 }

@@ -4,7 +4,7 @@ let
   screenshotsDir = "/Users/${config.system.primaryUser}/Pictures/Screenshots";
 in
 {
-  # Homebrew must be installed separately before the first darwin-rebuild.
+  # Homebrew itself is installed by nix-homebrew (see flake.nix).
   nixpkgs.hostPlatform = "aarch64-darwin";
   nixpkgs.config.allowUnfree = true;
 
@@ -15,15 +15,12 @@ in
     };
     onActivation.cleanup = "none"; # Keep unrelated Homebrew apps untouched.
     casks = [
-      "firefox"
       "obsidian"
-      "obs"
-      "google-drive"
       "protonvpn"
       "raycast"
+      "rectangle"
       "alt-tab"
       "android-studio"
-      "orbstack"
     ];
   };
 
@@ -58,7 +55,7 @@ in
   };
 
   # Screenshot destinations must exist before macOS can save files there.
-  system.activationScripts.postUserActivation.text = ''
+  system.activationScripts.postActivation.text = ''
     /usr/bin/install -d -o "${config.system.primaryUser}" -g staff "${screenshotsDir}"
   '';
 

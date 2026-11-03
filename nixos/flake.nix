@@ -21,6 +21,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-homebrew.url = "github:zhaofengli/nix-homebrew";
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -68,6 +70,22 @@
         ];
       };
 
+      # User environment only; activate independently of nix-darwin.
+      homeConfigurations.personal = home-manager.lib.homeManagerConfiguration {
+        pkgs = import nixpkgs {
+          system = "aarch64-darwin";
+          config.allowUnfree = true;
+        };
+        extraSpecialArgs = { inherit inputs; };
+        modules = [
+          ./home/macos
+          {
+            home.username = "liammurphy";
+            home.homeDirectory = "/Users/liammurphy";
+          }
+        ];
+      };
+
       # Personal Apple Silicon Mac: nix-darwin owns system configuration
       # and integrates the same reusable Home Manager modules as Linux.
       darwinConfigurations.personal = darwin.lib.darwinSystem {
@@ -76,7 +94,15 @@
         modules = [
           ./hosts/macos
           home-manager.darwinModules.home-manager
+          inputs.nix-homebrew.darwinModules.nix-homebrew
           {
+            # Install and manage Homebrew itself declaratively.
+            nix-homebrew = {
+              enable = true;
+              enableRosetta = false;
+              user = "liammurphy";
+              autoMigrate = true; # Adopt an existing /opt/homebrew install.
+            };
             system.primaryUser = "liammurphy";
             users.users.liammurphy.home = "/Users/liammurphy";
             home-manager.useGlobalPkgs = true;
@@ -87,7 +113,7 @@
               home.username = "liammurphy";
               home.homeDirectory = "/Users/liammurphy";
               programs.zsh.shellAliases.update = lib.mkForce
-                "nix flake update --flake ~/os-setup/nixos && sudo darwin-rebuild switch --flake ~/os-setup/nixos#personal";
+                "nix flake update --flake ~/repos/os-setup/nixos && sudo darwin-rebuild switch --flake ~/repos/os-setup/nixos#personal";
             };
           }
         ];

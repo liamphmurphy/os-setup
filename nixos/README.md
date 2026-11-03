@@ -20,7 +20,7 @@ nixos/
 │   │   └── default.nix
 │   ├── wsl/                        # WSL Home Manager profile for user 'liam'
 │   │   └── default.nix
-│   ├── work/                       # macOS / Darwin standalone Home Manager profile
+│   ├── macos/                      # Shared macOS Home Manager profile
 │   │   └── default.nix
 │   └── modules/                    # Shared Home Manager modules
 │       ├── codex.nix               # Codex agent skill harness
@@ -73,14 +73,16 @@ sudo nixos-rebuild switch --flake ~/os-setup/nixos#lime
 sudo nixos-rebuild switch --flake ~/os-setup/nixos#wsl
 ```
 
-### Standalone Home Manager (`liam` / `work`)
+### Standalone Home Manager (`liam` / `personal`)
 ```sh
 # On non-NixOS Linux:
 home-manager switch --flake ~/os-setup/nixos#liam
 
 # On macOS (Darwin):
-home-manager switch --flake ~/os-setup/nixos#work
+home-manager switch --flake ~/repos/os-setup/nixos#personal
 ```
+
+For first-time macOS setup, including CLI feature settings and dotfile backups, follow the [macOS quick start](../README.md#3-personal-macos-setup-apple-silicon). Standalone Home Manager does not apply nix-darwin system settings.
 
 ---
 

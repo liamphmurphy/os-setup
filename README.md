@@ -67,34 +67,36 @@ See [nixos/README.md](nixos/README.md) for detailed module documentation and sta
 
 ### 3. Personal macOS Setup (Apple Silicon)
 
-This profile is for the personal Mac with macOS short username `liammurphy` (home directory `/Users/liammurphy`). **Do not apply it to an employer-managed Mac.** It uses nix-darwin for system settings, Homebrew applications, and Home Manager modules.
+Use **standalone Home Manager** to manage the terminal, dotfiles, editor and language tools without applying macOS system settings. The personal Apple Silicon target is `homeConfigurations.personal`, for user `liammurphy` with home `/Users/liammurphy`.
 
-1. Finish macOS onboarding and confirm the account name with `whoami`; it must be `liammurphy` for the current flake target.
-2. Install **Xcode Command Line Tools** with `xcode-select --install` and complete the installer. Install **Nix** using the macOS multi-user installation method described in the [nix-darwin installation guide](https://github.com/nix-darwin/nix-darwin#installation).
-3. Install [Homebrew](https://brew.sh/) separately. This flake manages Homebrew apps but does not install Homebrew itself. Verify `/opt/homebrew/bin/brew --version`.
-4. Clone and enter the repository:
-
-   ```sh
-   git clone https://github.com/liamphmurphy/os-setup.git ~/os-setup
-   cd ~/os-setup/nixos
-   ```
-
-5. **Until `nixos/flake.lock` is updated and committed on this PR**, run `nix flake lock` here and commit the resulting lockfile. The new nix-darwin input must be locked before the configuration is fully reproducible.
-6. Evaluate/build the profile before activation:
+1. Install Xcode Command Line Tools (`xcode-select --install`) and Nix using a macOS-compatible multi-user installer. Open a new terminal after installation.
+2. Clone this repository to `~/repos/os-setup`, or enter your existing checkout.
+3. From the repository root, enable Nix CLI features and build the user environment:
 
    ```sh
-   nix build .#darwinConfigurations.personal.system
+   export NIX_CONFIG=$'experimental-features = nix-command flakes'
+   nix build ./nixos#homeConfigurations.personal.activationPackage
    ```
 
-7. Bootstrap nix-darwin, following the [official instructions](https://github.com/nix-darwin/nix-darwin#installation) for a flake-based installation, targeting `~/os-setup/nixos#personal`. After the first installation, apply changes with:
+4. Bootstrap Home Manager from the build result, backing up existing dotfiles:
 
    ```sh
-   sudo darwin-rebuild switch --flake ~/os-setup/nixos#personal
+   ./result/home-path/bin/home-manager switch \
+     -b before-home-manager \
+     --flake ./nixos#personal
    ```
 
-8. Sign into the Mac App Store for Xcode installation; open Xcode and Android Studio to finish their first-run setup and download the required simulator/SDK components. Set up Raycast hotkeys, app permissions, and Pixel USB debugging as needed.
+   Existing files such as `~/.zshrc` and `~/.ssh/config` are renamed with the `.before-home-manager` suffix. Review those backups and transfer any settings you need into the Nix modules. If a backup with that name already exists, preserve it and choose a different suffix.
 
-**Important:** This configuration has not yet been evaluated or activated on the new Mac. Do not run `darwin-rebuild switch` until the build succeeds and the flake lockfile is committed. See [macOS setup notes](nixos/hosts/macos/README.md) for apps, preferences, Android USB debugging, and Nix maintenance details.
+5. Open a new terminal. Apply future changes from the repository root with:
+
+   ```sh
+   home-manager switch --flake ./nixos#personal
+   ```
+
+To persist CLI feature support, add `experimental-features = nix-command flakes` to `~/.config/nix/nix.conf`, creating the directory/file if needed and preserving existing settings. If `home-manager` is unavailable during bootstrap, use the command under `./result/home-path/bin/` above.
+
+Home Manager activation does not require `sudo` or Homebrew. Rectangle, Homebrew apps, and macOS preferences belong to the separate, optional nix-darwin configuration. See [macOS setup notes](nixos/hosts/macos/README.md) for that configuration and Android development details.
 
 ---
 
