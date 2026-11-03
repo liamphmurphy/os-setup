@@ -29,5 +29,12 @@
     "$HOME/Library/Android/sdk/cmdline-tools/latest/bin"
   ];
 
+  # Put Homebrew on PATH when it's installed (guarded so it's harmless without it).
+  programs.zsh.profileExtra = ''
+    if [ -x /opt/homebrew/bin/brew ]; then
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+    fi
+  '';
+
   programs.home-manager.enable = true;
 }
