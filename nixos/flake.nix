@@ -39,6 +39,7 @@
       ...
     }:
     {
+      # RETIRED: the gaming desktop is Windows-only now. Kept for reference.
       nixosConfigurations.lime = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
         modules = [

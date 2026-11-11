@@ -1,3 +1,5 @@
+# RETIRED (2026-11): the gaming desktop this ran on is Windows-only now.
+# Kept for reference and a possible reinstall; not maintained.
 { pkgs, inputs, ... }:
 
 {
