@@ -55,7 +55,8 @@ git clone <repository-url> ~/os-setup
 sudo nixos-rebuild switch --flake ~/os-setup/nixos#wsl
 ```
 
-#### On Bare Metal Desktop (`lime`)
+#### On Bare Metal Desktop (`lime`, retired)
+> **Retired (2026-11):** the gaming desktop this ran on is Windows-only now. Kept for reference and a possible reinstall; not maintained.
 ```zsh
 # On first install, ensure /etc/nixos/hardware-configuration.nix is copied to ~/os-setup/nixos/hosts/lime/
 sudo nixos-rebuild switch --flake ~/os-setup/nixos#lime

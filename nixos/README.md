@@ -10,7 +10,7 @@ This directory contains the declarative system and home configurations managed v
 nixos/
 ├── flake.nix                       # Flake inputs, outputs, system configurations, checks
 ├── hosts/
-│   ├── lime/                       # Bare metal desktop host configuration
+│   ├── lime/                       # RETIRED: former bare metal desktop host
 │   │   ├── default.nix
 │   │   └── hardware-configuration.nix
 │   └── wsl/                        # WSL2 host configuration (via nix-community/NixOS-WSL)
@@ -45,7 +45,8 @@ nixos/
 
 ## Hosts Overview
 
-### 1. `lime` (Bare Metal Desktop)
+### 1. `lime` (Bare Metal Desktop, retired)
+> **Retired (2026-11):** the gaming desktop this ran on is Windows-only now. Kept for reference and a possible reinstall; not maintained.
 - **Platform**: `x86_64-linux`
 - **Kernel**: CachyOS Linux kernel (`pkgs.linuxPackages_cachyos`)
 - **Features**: Full KDE Plasma 6 Wayland desktop, AMD ROCm Ollama LLM (`qwen3-coder`), Pipewire audio, Steam gaming, Docker/KVM, and full GUI applications.
@@ -63,7 +64,7 @@ nixos/
 
 ## Deployment & Switch Commands
 
-### Bare Metal (`lime`)
+### Bare Metal (`lime`, retired)
 ```zsh
 sudo nixos-rebuild switch --flake ~/os-setup/nixos#lime
 ```
