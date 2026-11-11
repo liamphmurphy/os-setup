@@ -48,6 +48,12 @@
         ];
       };
 
+      # Headless Vesper server, reached over Tailscale.
+      nixosConfigurations.vesper = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs; };
+        modules = [ ./hosts/vesper ];
+      };
+
       nixosConfigurations.wsl = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
         modules = [
