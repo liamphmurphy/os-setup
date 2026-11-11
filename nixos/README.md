@@ -13,6 +13,7 @@ nixos/
 │   ├── lime/                       # RETIRED: former bare metal desktop host
 │   │   ├── default.nix
 │   │   └── hardware-configuration.nix
+│   ├── vesper/                     # Headless Vesper server, reached over Tailscale
 │   └── wsl/                        # WSL2 host configuration (via nix-community/NixOS-WSL)
 │       └── default.nix
 ├── home/
@@ -50,6 +51,11 @@ nixos/
 - **Platform**: `x86_64-linux`
 - **Kernel**: CachyOS Linux kernel (`pkgs.linuxPackages_cachyos`)
 - **Features**: Full KDE Plasma 6 Wayland desktop, AMD ROCm Ollama LLM (`qwen3-coder`), Pipewire audio, Steam gaming, Docker/KVM, and full GUI applications.
+
+### `vesper` (Headless server)
+- **Platform**: `x86_64-linux`
+- **Features**: Runs Vesper's Docker Compose stack, served only to the tailnet with `tailscale serve`; no desktop. Modules `server.nix` (no sleep, key-only SSH, Tailscale) and `vesper.nix` (compose unit, serve unit, restic backups).
+- **Setup**: see [`docs/vesper-server.md`](../docs/vesper-server.md).
 
 ### 2. `wsl` (WSL2 on Windows 11)
 - **Platform**: `x86_64-linux`
